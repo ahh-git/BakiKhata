@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Guard } from "@/components/Guard";
 import { useSession } from "@/context/SessionProvider";
 import { liveEval, money } from "@/lib/calc";
@@ -23,7 +24,10 @@ export default function PayPage() {
     (async () => {
       const { data } = await supabase.from("profiles").select("*").eq("id", shopId).maybeSingle();
       setShop(data as Profile);
-      const { data: bal } = await supabase.rpc("balance_for", { p_shop: shopId, p_customer: user.id });
+      const { data: bal } = await supabase.rpc("balance_for", {
+        p_shop: shopId,
+        p_customer: user.id,
+      });
       setDue(Number(bal || 0));
     })();
   }, [shopId, user]);
@@ -50,20 +54,34 @@ export default function PayPage() {
 
   return (
     <Guard>
-      <form onSubmit={submit} className="glass-card rounded-[28px] p-6">
-        <h1 className="text-2xl font-bold">বাকি পরিশোধ</h1>
-        <p className="muted mt-1">
-          {shop?.shop_name} · এখন বাকি ৳{money(due)}
-        </p>
-        <div className="mt-5 rounded-3xl bg-white/50 p-5 text-center">
-          <p className="text-xs text-slate-500">পরিশোধের অঙ্ক</p>
-          <p className="live-amount">৳{amount == null ? "—" : money(amount)}</p>
-        </div>
-        <input className="field mt-4" placeholder="যেমন 100 বা 50+50" value={expr} onChange={(e) => setExpr(e.target.value)} />
-        <button className="primary mt-4">দোকানদারকে অনুরোধ পাঠান</button>
-        {msg ? <p className="mt-3 text-sm text-emerald-700">{msg}</p> : null}
-        {error ? <p className="mt-3 text-sm text-rose-600">{error}</p> : null}
-      </form>
+      <div className="space-y-3">
+        <Link
+          href="/home"
+          className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-800 bg-white px-3 py-1.5 rounded-full border border-slate-200 shadow-xs transition-all"
+        >
+          <span>←</span>
+          <span>ড্যাশবোর্ডে ফিরুন</span>
+        </Link>
+        <form onSubmit={submit} className="glass-card rounded-[28px] p-6">
+          <h1 className="text-2xl font-bold text-slate-900">বাকি পরিশোধ</h1>
+          <p className="muted mt-1">
+            {shop?.shop_name} · এখন বাকি ৳{money(due)}
+          </p>
+          <div className="mt-5 rounded-3xl bg-white/60 p-5 text-center border border-slate-200/60 shadow-xs">
+            <p className="text-xs text-slate-500 font-bold">পরিশোধের অঙ্ক</p>
+            <p className="live-amount text-emerald-600">৳{amount == null ? "—" : money(amount)}</p>
+          </div>
+          <input
+            className="field mt-4"
+            placeholder="যেমন 100 বা 50+50"
+            value={expr}
+            onChange={(e) => setExpr(e.target.value)}
+          />
+          <button className="primary mt-4">দোকানদারকে অনুরোধ পাঠান</button>
+          {msg ? <p className="mt-3 text-sm font-bold text-emerald-700">{msg}</p> : null}
+          {error ? <p className="mt-3 text-sm text-rose-600">{error}</p> : null}
+        </form>
+      </div>
     </Guard>
   );
 }
