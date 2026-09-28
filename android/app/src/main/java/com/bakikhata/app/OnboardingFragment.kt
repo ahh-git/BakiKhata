@@ -104,12 +104,14 @@ class OnboardingFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
+                val pendingAvatar = activity.sessionManager.getPendingAvatarUrl()
                 val upsertResult = SupabaseService.upsertProfile(
                     id = userId,
                     fullName = name,
                     phone = phone,
                     role = "shopkeeper",
                     shopName = shopName,
+                    avatarUrl = pendingAvatar,
                     token = token
                 )
                 if (upsertResult.isFailure) {
@@ -147,12 +149,14 @@ class OnboardingFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
+                val pendingAvatar = activity.sessionManager.getPendingAvatarUrl()
                 val upsertResult = SupabaseService.upsertProfile(
                     id = userId,
                     fullName = name,
                     phone = phone,
                     role = "customer",
                     shopName = null,
+                    avatarUrl = pendingAvatar,
                     token = token
                 )
                 if (upsertResult.isFailure) {

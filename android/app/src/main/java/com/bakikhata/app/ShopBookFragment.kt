@@ -150,19 +150,47 @@ class ShopBookFragment : Fragment() {
                     }
                 },
                 onSendReminder = { profile, due ->
-                    ShareUtil.sendWhatsAppReminder(
-                        requireContext(),
-                        profile.phone,
-                        profile.full_name ?: "কাস্টমার",
-                        shopName,
-                        due
-                    )
+                    showReminderOptions(profile, due, shopName)
                 },
                 onCall = { phone ->
                     ShareUtil.makePhoneCall(requireContext(), phone)
                 }
             )
         }
+    }
+
+    private fun showReminderOptions(profile: Profile, due: Double, shopName: String) {
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.dialog_reminder_options, null)
+        dialog.setContentView(view)
+
+        val customerName = profile.full_name ?: "কাস্টমার"
+        view.findViewById<android.widget.TextView>(R.id.tvReminderCustomerTitle)?.text = "$customerName-কে তাগাদা পাঠান"
+        view.findViewById<android.widget.TextView>(R.id.tvReminderCustomerSubtitle)?.text = "বর্তমান বকেয়া: ৳${Calc.money(due)}"
+
+        view.findViewById<View>(R.id.btnReminderGentle)?.setOnClickListener {
+            HapticUtil.tap(it)
+            dialog.dismiss()
+            ShareUtil.sendWhatsAppReminder(requireContext(), profile.phone, customerName, shopName, due, ReminderType.GENTLE)
+        }
+
+        view.findViewById<View>(R.id.btnReminderUrgent)?.setOnClickListener {
+            HapticUtil.tap(it)
+            dialog.dismiss()
+            ShareUtil.sendWhatsAppReminder(requireContext(), profile.phone, customerName, shopName, due, ReminderType.URGENT)
+        }
+
+        view.findViewById<View>(R.id.btnReminderStatement)?.setOnClickListener {
+            HapticUtil.tap(it)
+            dialog.dismiss()
+            ShareUtil.sendWhatsAppReminder(requireContext(), profile.phone, customerName, shopName, due, ReminderType.STATEMENT)
+        }
+
+        view.findViewById<View>(R.id.btnCancelReminderDialog)?.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     fun loadData() {
@@ -247,9 +275,15 @@ class ShopBookAdapter(
         b.tvCustomerName.text = name
         b.tvCustomerPhone.text = profile.phone ?: "নম্বর নেই"
 
-        // Initials circle
+        // Customer Avatar Photo / Initials
         val initial = if (name.isNotBlank()) name.first().toString() else "ক"
         b.tvAvatarInitials.text = initial
+        ImageLoader.loadCircular(
+            imageView = b.ivCustomerAvatar,
+            url = profile.avatar_url,
+            fallbackView = b.tvAvatarInitials,
+            initials = initial
+        )
 
         // Due amount & styling
         b.tvCustomerDue.text = "৳${Calc.money(due)}"

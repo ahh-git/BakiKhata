@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sessionManager: SessionManager
     private lateinit var binding: ActivityMainBinding
     private var isHandlingDeepLink = false
+    private var isAppUnlocked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +72,54 @@ class MainActivity : AppCompatActivity() {
         if (scheme == "onebaki" || scheme == "bakikhata") {
             handleDeepLink(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkAppSecurityLock()
+    }
+
+    private fun checkAppSecurityLock() {
+        if (!sessionManager.isLoggedIn()) return
+        if (!sessionManager.isAppLockEnabled()) return
+        val savedPin = sessionManager.getAppPin() ?: return
+        if (isAppUnlocked) return
+
+        showPinVerificationDialog(savedPin)
+    }
+
+    private fun showPinVerificationDialog(savedPin: String) {
+        val dialog = com.google.android.material.bottomsheet.BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.dialog_pin_lock, null)
+        dialog.setContentView(view)
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+
+        view.findViewById<TextView>(R.id.tvPinDialogTitle)?.text = "অ্যাপ আনলক করুন"
+        view.findViewById<TextView>(R.id.tvPinDialogSubtitle)?.text = "আপনার ৪ সংখ্যার গোপন PIN লিখুন"
+        val etPin = view.findViewById<EditText>(R.id.etPinCode)
+        val btnConfirm = view.findViewById<View>(R.id.btnConfirmPin)
+        val btnCancel = view.findViewById<View>(R.id.btnCancelPin)
+
+        btnConfirm?.setOnClickListener {
+            val entered = etPin?.text?.toString()?.trim()
+            if (entered == savedPin) {
+                HapticUtil.success(it)
+                isAppUnlocked = true
+                dialog.dismiss()
+            } else {
+                HapticUtil.tap(it)
+                Toast.makeText(this, "ভুল PIN কোড! আবার চেষ্টা করুন।", Toast.LENGTH_SHORT).show()
+                etPin?.text?.clear()
+            }
+        }
+
+        btnCancel?.setOnClickListener {
+            dialog.dismiss()
+            finishAffinity()
+        }
+
+        dialog.show()
     }
 
     /** Sets up the bottom nav with the correct menu for the user's role */
@@ -154,12 +205,17 @@ class MainActivity : AppCompatActivity() {
                 try {
                     val user = SupabaseService.getCurrentUser(accessToken)
                     if (user != null) {
-                        val userId = user.first
-                        val email = user.second
+                        val userId = user.id
+                        val email = user.email
                         sessionManager.saveSession(accessToken, refreshToken, userId, email)
+                        sessionManager.savePendingAvatarUrl(user.avatarUrl)
 
-                        val profile = SupabaseService.getProfile(userId, accessToken)
+                        var profile = SupabaseService.getProfile(userId, accessToken)
                         if (profile != null) {
+                            if (profile.avatar_url.isNullOrBlank() && !user.avatarUrl.isNullOrBlank()) {
+                                SupabaseService.updateProfileAvatar(userId, user.avatarUrl, accessToken)
+                                profile = profile.copy(avatar_url = user.avatarUrl)
+                            }
                             sessionManager.saveProfile(profile)
                         }
                         onLoginComplete()
@@ -210,7 +266,14 @@ class MainActivity : AppCompatActivity() {
                 var profile = sessionManager.getProfile()
                 if (profile == null) {
                     profile = SupabaseService.getProfile(userId, token)
-                    if (profile != null) sessionManager.saveProfile(profile)
+                    if (profile != null) {
+                        val pendingAvatar = sessionManager.getPendingAvatarUrl()
+                        if (profile.avatar_url.isNullOrBlank() && !pendingAvatar.isNullOrBlank()) {
+                            SupabaseService.updateProfileAvatar(userId, pendingAvatar, token)
+                            profile = profile.copy(avatar_url = pendingAvatar)
+                        }
+                        sessionManager.saveProfile(profile)
+                    }
                 }
 
                 if (profile == null || profile.role == null) {

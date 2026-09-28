@@ -11,6 +11,13 @@ data class Profile(
     val created_at: String? = null
 )
 
+data class AuthUserInfo(
+    val id: String,
+    val email: String? = null,
+    val avatarUrl: String? = null,
+    val fullName: String? = null
+)
+
 data class LedgerRow(
     val id: String,
     val shopkeeper_id: String,

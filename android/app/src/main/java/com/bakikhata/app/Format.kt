@@ -71,8 +71,7 @@ object Format {
     }
 
     fun waLink(phone: String?, text: String): String {
-        if (phone.isNullOrEmpty()) return "#"
-        val cleanPhone = phone.replace(Regex("[^0-9]"), "")
+        val cleanPhone = ShareUtil.normalizePhoneNumber(phone) ?: return "#"
         val encodedText = try {
             URLEncoder.encode(text, "UTF-8")
         } catch (_: Exception) {

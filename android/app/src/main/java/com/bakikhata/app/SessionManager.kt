@@ -1,4 +1,4 @@
-﻿package com.bakikhata.app
+package com.bakikhata.app
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -22,6 +22,21 @@ class SessionManager(context: Context) {
     fun getUserEmail(): String? = prefs.getString("user_email", null)
 
     fun isLoggedIn(): Boolean = !getAccessToken().isNullOrEmpty() && !getUserId().isNullOrEmpty()
+
+    fun savePendingAvatarUrl(url: String?) {
+        prefs.edit().putString("pending_avatar_url", url).apply()
+    }
+    fun getPendingAvatarUrl(): String? = prefs.getString("pending_avatar_url", null)
+
+    fun isAppLockEnabled(): Boolean = prefs.getBoolean("app_lock_enabled", false)
+    fun setAppLockEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean("app_lock_enabled", enabled).apply()
+    }
+
+    fun getAppPin(): String? = prefs.getString("app_pin", null)
+    fun setAppPin(pin: String?) {
+        prefs.edit().putString("app_pin", pin).apply()
+    }
 
     fun saveProfile(profile: Profile) {
         val json = JSONObject().apply {

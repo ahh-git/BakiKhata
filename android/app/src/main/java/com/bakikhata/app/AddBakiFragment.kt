@@ -92,8 +92,7 @@ class AddBakiFragment : Fragment() {
                 "সময়: ${t.date}, ${t.weekday}, ${t.clock}"
             ).joinToString("\n")
 
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Format.waLink(shop.phone, text)))
-            startActivity(intent)
+            ShareUtil.openWhatsApp(requireContext(), shop.phone, text)
         }
     }
 

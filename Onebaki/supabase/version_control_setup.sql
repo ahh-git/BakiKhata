@@ -25,15 +25,20 @@ create policy "Allow public read access to app_version"
   for select
   using (true);
 
--- Insert or update initial version record for v1.2.0 (Build 3)
-delete from public.app_version where version_code = 3;
+-- Insert or update initial version record for v1.3.0 (Build 4)
+delete from public.app_version where version_code = 4;
 
 insert into public.app_version (version_code, version_name, min_supported_version, download_url, release_notes, is_critical)
 values (
-  3,
-  '1.2.0',
+  4,
+  '1.3.0',
   1,
-  'https://github.com/ahh-git/BakiKhata/releases/download/v1.2.0/BakiKhata-v1.2.apk',
-  '• প্রিমিয়াম ফ্লোটিং বটম নেভিগেশন বার\n• বাকি পরিশোধের অনুরোধকারীর নাম ও মোবাইল নম্বর প্রদর্শন\n• ক্যামেরা কিউআর কোড স্ক্যানার\n• নতুন ব্র্যান্ড লোগো ও প্যাকেজ নেম com.bakikhata.app\n• ইন-অ্যাপ ভার্সন কন্ট্রোল ও অটো-আপডেট চেকার',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.3.0/BakiKhata-v1.3.apk',
+  '• প্রোফাইল ছবি আপডেট ও গ্যালারি থেকে ছবি আপলোড
+• Google / Gmail একাউন্টের ছবি অটো-ডিটেকশন
+• নির্ভুল WhatsApp ডিরেক্ট মেসেজিং (বাংলাদেশ কান্ট্রি কোড সহ ফিক্স)
+• কাস্টমারদের জন্য স্মার্ট তাগাদা অপশন (নম্র, জরুরি ও হিসাবের বিবরণ)
+• অ্যাপ লক ও ৪ সংখ্যার গোপন PIN নিরাপত্তা
+• ডিজিটাল খাতা স্টেটমেন্ট শেয়ার',
   false
 );

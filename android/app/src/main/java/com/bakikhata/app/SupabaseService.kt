@@ -78,6 +78,7 @@ object SupabaseService {
         phone: String,
         role: String,
         shopName: String? = null,
+        avatarUrl: String? = null,
         token: String
     ): Result<Unit> {
         val json = JSONObject().apply {
@@ -86,6 +87,7 @@ object SupabaseService {
             put("phone", phone)
             put("role", role)
             if (shopName != null) put("shop_name", shopName)
+            if (!avatarUrl.isNullOrEmpty()) put("avatar_url", avatarUrl)
         }
         val (code, resp) = request(
             "POST",
@@ -95,6 +97,23 @@ object SupabaseService {
             extraHeaders = mapOf("Prefer" to "resolution=merge-duplicates")
         )
         return if (code in 200..299) Result.success(Unit) else Result.failure(Exception("Failed to update profile: $resp"))
+    }
+
+    suspend fun updateProfileAvatar(userId: String, avatarUrl: String?, token: String): Result<Unit> {
+        val json = JSONObject().apply {
+            if (avatarUrl.isNullOrEmpty()) {
+                put("avatar_url", JSONObject.NULL)
+            } else {
+                put("avatar_url", avatarUrl)
+            }
+        }
+        val (code, resp) = request(
+            "PATCH",
+            "/rest/v1/profiles?id=eq.$userId",
+            body = json.toString(),
+            token = token
+        )
+        return if (code in 200..299) Result.success(Unit) else Result.failure(Exception("Failed to update avatar: $resp"))
     }
 
     suspend fun claimShopCode(token: String): Result<String> {
@@ -362,15 +381,42 @@ object SupabaseService {
         }
     }
 
-    // Fetch actual user record using access token - needed after OAuth where userId isn't in the redirect fragment
-    suspend fun getCurrentUser(token: String): Pair<String, String?>? {
+    // Fetch actual user record using access token - captures email, Google avatar, and name
+    suspend fun getCurrentUser(token: String): AuthUserInfo? {
         val (code, resp) = request("GET", "/auth/v1/user", token = token)
         if (code !in 200..299) return null
         return try {
             val obj = JSONObject(resp)
             val id = obj.getString("id")
             val email = obj.optString("email").takeIf { it.isNotEmpty() && it != "null" }
-            Pair(id, email)
+
+            var avatarUrl: String? = null
+            var fullName: String? = null
+
+            val meta = obj.optJSONObject("user_metadata")
+            if (meta != null) {
+                avatarUrl = meta.optString("avatar_url").takeIf { it.isNotEmpty() && it != "null" }
+                    ?: meta.optString("picture").takeIf { it.isNotEmpty() && it != "null" }
+                fullName = meta.optString("full_name").takeIf { it.isNotEmpty() && it != "null" }
+                    ?: meta.optString("name").takeIf { it.isNotEmpty() && it != "null" }
+            }
+
+            if (avatarUrl == null) {
+                val identities = obj.optJSONArray("identities")
+                if (identities != null && identities.length() > 0) {
+                    val idData = identities.getJSONObject(0).optJSONObject("identity_data")
+                    if (idData != null) {
+                        avatarUrl = idData.optString("avatar_url").takeIf { it.isNotEmpty() && it != "null" }
+                            ?: idData.optString("picture").takeIf { it.isNotEmpty() && it != "null" }
+                        if (fullName == null) {
+                            fullName = idData.optString("full_name").takeIf { it.isNotEmpty() && it != "null" }
+                                ?: idData.optString("name").takeIf { it.isNotEmpty() && it != "null" }
+                        }
+                    }
+                }
+            }
+
+            AuthUserInfo(id = id, email = email, avatarUrl = avatarUrl, fullName = fullName)
         } catch (e: Exception) {
             null
         }

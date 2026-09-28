@@ -22,21 +22,45 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Circular Avatar -->
+            <!-- Circular Avatar Frame with Camera Edit Badge -->
             <FrameLayout
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:background="@drawable/bg_avatar_circle">
+                android:id="@+id/layoutAvatarContainer"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:clickable="true"
+                android:focusable="true">
 
-                <TextView
-                    android:id="@+id/tvProfileAvatarInitials"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/primary_indigo"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    tools:text="র" />
+                <FrameLayout
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_avatar_circle">
+
+                    <ImageView
+                        android:id="@+id/ivProfileAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvProfileAvatarInitials"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/primary_indigo"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        tools:text="র" />
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/btnChangeAvatar"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/bg_avatar_camera_pill"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_camera" />
             </FrameLayout>
 
             <TextView
@@ -58,6 +82,7 @@
                 android:textSize="12sp"
                 tools:text="user@gmail.com" />
 
+            <!-- Role Badge -->
             <TextView
                 android:id="@+id/tvProfileRoleBadge"
                 android:layout_width="wrap_content"
@@ -70,6 +95,35 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 tools:text="দোকানদার" />
+
+            <!-- Edit Avatar Photo Button -->
+            <LinearLayout
+                android:id="@+id/btnEditAvatarPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_glass_chip"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="6dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_camera" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="ছবি পরিবর্তন / আপডেট করুন"
+                    android:textColor="@color/primary_indigo"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Account Details Card -->
@@ -184,7 +238,136 @@
                     android:textStyle="bold"
                     tools:text="01700000000" />
             </LinearLayout>
+        </LinearLayout>
 
+        <!-- Security & App Lock Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_lock" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="অ্যাপ লক ও ডেটা নিরাপত্তা"
+                    android:textColor="@color/ink"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switchAppLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="অ্যাপ ওপেন করতে এবং বাকি হিসাব গোপন রাখতে ৪ সংখ্যার PIN ব্যবহার করুন।"
+                android:textColor="@color/ink_muted"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/btnChangePin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_glass_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="8dp"
+                android:text="PIN পরিবর্তন করুন"
+                android:textColor="@color/primary_indigo"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- Digital Statement Sharing Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_book" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:text="ডিজিটাল খাতা বিবরণী"
+                    android:textColor="@color/ink"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="আপনার অ্যাকাউন্টের আনুষ্ঠানিক বিবরণ বা আমন্ত্রণপত্র তৈরি করে শেয়ার করুন।"
+                android:textColor="@color/ink_muted"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/btnShareStatement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_glass_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_share" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="খাতা বিবরণী শেয়ার করুন"
+                    android:textColor="@color/ink"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- Help & App Info Card -->
@@ -254,7 +437,7 @@
                     android:id="@+id/tvAppVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="বাকিখাতা v1.2.0 · সুরক্ষিত ক্লাউড খাতা"
+                    android:text="বাকিখাতা v1.3.0 · সুরক্ষিত ক্লাউড খাতা"
                     android:textColor="@color/ink_light"
                     android:textSize="12sp" />
 
