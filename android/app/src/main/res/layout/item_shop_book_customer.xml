@@ -178,10 +178,16 @@
 
         <!-- View Ledger Hint -->
         <LinearLayout
+            android:id="@+id/btnViewLedger"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp">
 
             <TextView
                 android:layout_width="wrap_content"

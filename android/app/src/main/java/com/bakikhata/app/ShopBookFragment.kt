@@ -313,8 +313,12 @@ class ShopBookAdapter(
             onCall(profile.phone)
         }
 
-        // Item root click -> View detailed ledger
+        // Item root click or "হিসাব দেখুন" click -> View detailed customer ledger
         holder.itemView.setOnClickListener {
+            HapticUtil.tap(it)
+            onItemClick(profile.id)
+        }
+        b.btnViewLedger.setOnClickListener {
             HapticUtil.tap(it)
             onItemClick(profile.id)
         }

@@ -337,7 +337,7 @@ class MainActivity : AppCompatActivity() {
     fun navigateToShopCustomerHistory(shopId: String, customerId: String) {
         binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
-        showFragment(HistoryFragment.newInstance(shopId, isShopkeeper = true), addToBackStack = true)
+        showFragment(CustomerLedgerFragment.newInstance(shopId, customerId), addToBackStack = true)
     }
 
     fun openGoogleLogin() {
