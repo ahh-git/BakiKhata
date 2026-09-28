@@ -25,20 +25,20 @@ create policy "Allow public read access to app_version"
   for select
   using (true);
 
--- Insert or update version record for v1.4.0 (Build 5)
-delete from public.app_version where version_code = 5;
+-- Insert or update version record for v1.5.0 (Build 6)
+delete from public.app_version where version_code = 6;
 
 insert into public.app_version (version_code, version_name, min_supported_version, download_url, release_notes, is_critical)
 values (
-  5,
-  '1.4.0',
+  6,
+  '1.5.0',
   1,
-  'https://github.com/ahh-git/BakiKhata/releases/download/v1.4.0/BakiKhata-v1.4.apk',
-  '• অ্যাপের ভেতর থেকেই সরাসরি APK ডাউনলোড ও প্রগ্রেস বার
-• ১-ট্যাপে ইনস্ট্যান্ট ইনস্টল (কোনো ক্রোম বা ব্রাউজারের ঝামেলা ছাড়াই)
-• Google একাউন্টের আসল 4K হাই-রেজোলিউশন প্রোফাইল ছবি সিঙ্ক
-• প্রফেশনাল A4 সাইজ ডিজিটাল PDF রসিদ ও লেজার স্টেটমেন্ট তৈরি
-• কাস্টমার ও দোকানদারের জন্য ১-ক্লিক WhatsApp ও PDF প্রিন্ট/শেয়ার',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.5.0/BakiKhata-v1.5.apk',
+  '• কার্ড ও বাটনসমূহের বর্ডারে মসৃণ চলমান নিয়ন লেজার লাইট এফেক্ট
+• খাতা ট্যাব থেকে কাস্টমারের ব্যক্তিগত খাতা ও বিস্তারিত লেনদেন খতিয়ান
+• অ্যাপের ভেতর লাইভ প্রগ্রেস বার সহ সরাসরি APK ডাউনলোডার ও ইনস্টলার
+• Google একাউন্টের আসল 4K ক্রিস্টাল ক্লিয়ার প্রোফাইল ছবি সিঙ্ক
+• প্রফেশনাল A4 সাইজ ডিজিটাল PDF রসিদ ও লেজার স্টেটমেন্ট তৈরি ও শেয়ার',
   false
 );
 
