@@ -25,20 +25,20 @@ create policy "Allow public read access to app_version"
   for select
   using (true);
 
--- Insert or update initial version record for v1.3.0 (Build 4)
-delete from public.app_version where version_code = 4;
+-- Insert or update version record for v1.4.0 (Build 5)
+delete from public.app_version where version_code = 5;
 
 insert into public.app_version (version_code, version_name, min_supported_version, download_url, release_notes, is_critical)
 values (
-  4,
-  '1.3.0',
+  5,
+  '1.4.0',
   1,
-  'https://github.com/ahh-git/BakiKhata/releases/download/v1.2.0/BakiKhata-v1.3.apk',
-  '• প্রোফাইল ছবি আপডেট ও গ্যালারি থেকে ছবি আপলোড
-• Google / Gmail একাউন্টের ছবি অটো-ডিটেকশন
-• নির্ভুল WhatsApp ডিরেক্ট মেসেজিং (বাংলাদেশ কান্ট্রি কোড সহ ফিক্স)
-• কাস্টমারদের জন্য স্মার্ট তাগাদা অপশন (নম্র, জরুরি ও হিসাবের বিবরণ)
-• অ্যাপ লক ও ৪ সংখ্যার গোপন PIN নিরাপত্তা
-• ডিজিটাল খাতা স্টেটমেন্ট শেয়ার',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.4.0/BakiKhata-v1.4.apk',
+  '• অ্যাপের ভেতর থেকেই সরাসরি APK ডাউনলোড ও প্রগ্রেস বার
+• ১-ট্যাপে ইনস্ট্যান্ট ইনস্টল (কোনো ক্রোম বা ব্রাউজারের ঝামেলা ছাড়াই)
+• Google একাউন্টের আসল 4K হাই-রেজোলিউশন প্রোফাইল ছবি সিঙ্ক
+• প্রফেশনাল A4 সাইজ ডিজিটাল PDF রসিদ ও লেজার স্টেটমেন্ট তৈরি
+• কাস্টমার ও দোকানদারের জন্য ১-ক্লিক WhatsApp ও PDF প্রিন্ট/শেয়ার',
   false
 );
+

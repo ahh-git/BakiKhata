@@ -416,10 +416,27 @@ object SupabaseService {
                 }
             }
 
-            AuthUserInfo(id = id, email = email, avatarUrl = avatarUrl, fullName = fullName)
+            AuthUserInfo(id = id, email = email, avatarUrl = toHighResAvatarUrl(avatarUrl), fullName = fullName)
         } catch (e: Exception) {
             null
         }
+    }
+
+    /**
+     * Converts low-res Google avatar thumbnails (=s96-c) into original full 4K resolution (=s0)
+     */
+    fun toHighResAvatarUrl(url: String?): String? {
+        if (url.isNullOrBlank()) return null
+        if (url.contains("googleusercontent.com")) {
+            return if (url.contains(Regex("=s\\d+"))) {
+                url.replace(Regex("=s\\d+(-c)?"), "=s0")
+            } else if (url.contains("?")) {
+                "$url&sz=2048"
+            } else {
+                "$url=s0"
+            }
+        }
+        return url
     }
 
     private fun parseProfile(obj: JSONObject): Profile {
@@ -430,7 +447,7 @@ object SupabaseService {
             phone = obj.optString("phone").takeIf { it.isNotEmpty() && it != "null" },
             shop_code = obj.optString("shop_code").takeIf { it.isNotEmpty() && it != "null" },
             shop_name = obj.optString("shop_name").takeIf { it.isNotEmpty() && it != "null" },
-            avatar_url = obj.optString("avatar_url").takeIf { it.isNotEmpty() && it != "null" },
+            avatar_url = toHighResAvatarUrl(obj.optString("avatar_url").takeIf { it.isNotEmpty() && it != "null" }),
             created_at = obj.optString("created_at").takeIf { it.isNotEmpty() && it != "null" }
         )
     }

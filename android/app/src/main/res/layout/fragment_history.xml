@@ -78,6 +78,35 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <!-- PDF Statement Download Button -->
+        <LinearLayout
+            android:id="@+id/btnExportPdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_glass_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_book" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="অফিসিয়াল PDF স্টেটমেন্ট ডাউনলোড / শেয়ার"
+                android:textColor="@color/primary_indigo"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <!-- Ledger Entries RecyclerView -->
         <TextView
             android:id="@+id/tvEmptyLedger"

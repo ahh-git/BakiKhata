@@ -52,8 +52,10 @@ object ImageLoader {
             return
         }
 
+        val resolvedUrl = SupabaseService.toHighResAvatarUrl(url) ?: url
+
         // Check memory cache
-        val cached = memoryCache.get(url)
+        val cached = memoryCache.get(resolvedUrl)
         if (cached != null) {
             imageView.setImageBitmap(cached)
             imageView.visibility = View.VISIBLE
@@ -62,13 +64,13 @@ object ImageLoader {
         }
 
         // Tag view to avoid race conditions with recycled views in RecyclerView
-        imageView.tag = url
+        imageView.tag = resolvedUrl
 
         CoroutineScope(Dispatchers.IO).launch {
             val bitmap = try {
                 when {
-                    url.startsWith("data:image/") -> decodeBase64Image(url)
-                    url.startsWith("http://") || url.startsWith("https://") -> fetchNetworkImage(url)
+                    resolvedUrl.startsWith("data:image/") -> decodeBase64Image(resolvedUrl)
+                    resolvedUrl.startsWith("http://") || resolvedUrl.startsWith("https://") -> fetchNetworkImage(resolvedUrl)
                     else -> null
                 }
             } catch (_: Exception) {
@@ -78,9 +80,9 @@ object ImageLoader {
             val circular = if (bitmap != null) getCircularBitmap(bitmap) else null
 
             withContext(Dispatchers.Main) {
-                if (imageView.tag == url) {
+                if (imageView.tag == resolvedUrl) {
                     if (circular != null) {
-                        memoryCache.put(url, circular)
+                        memoryCache.put(resolvedUrl, circular)
                         imageView.setImageBitmap(circular)
                         imageView.visibility = View.VISIBLE
                         fallbackView?.visibility = View.GONE
@@ -171,7 +173,7 @@ object ImageLoader {
             }
 
             var inSampleSize = 1
-            val maxDim = 200
+            val maxDim = 800
             if (options.outHeight > maxDim || options.outWidth > maxDim) {
                 val halfHeight = options.outHeight / 2
                 val halfWidth = options.outWidth / 2
@@ -188,7 +190,7 @@ object ImageLoader {
                 BitmapFactory.decodeStream(it, null, decodeOptions)
             } ?: return null
 
-            // Scale precisely to max 200x200
+            // Scale precisely to max 800x800
             val aspect = rawBitmap.width.toFloat() / rawBitmap.height.toFloat()
             val targetW: Int
             val targetH: Int
@@ -202,7 +204,7 @@ object ImageLoader {
 
             val scaled = Bitmap.createScaledBitmap(rawBitmap, Math.max(1, targetW), Math.max(1, targetH), true)
             val stream = ByteArrayOutputStream()
-            scaled.compress(Bitmap.CompressFormat.JPEG, 75, stream)
+            scaled.compress(Bitmap.CompressFormat.JPEG, 85, stream)
             val byteArray = stream.toByteArray()
             val base64 = Base64.encodeToString(byteArray, Base64.NO_WRAP)
             "data:image/jpeg;base64,$base64"

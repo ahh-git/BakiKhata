@@ -294,17 +294,20 @@ class ProfileFragment : Fragment() {
             HapticUtil.tap(it)
             val activity = requireActivity() as? MainActivity ?: return@setOnClickListener
             val profile = activity.sessionManager.getProfile() ?: return@setOnClickListener
-            val role = if (profile.role == "shopkeeper") "দোকানদার" else "গ্রাহক"
-            val text = """
-BakiKhata ডিজিটাল খাতা একাউন্ট
-────────────────────────────
-নাম: ${profile.full_name ?: "ব্যবহারকারী"} ($role)
-মোবাইল: ${profile.phone ?: "—"}
-${if (!profile.shop_code.isNullOrEmpty()) "দোকান আইডি: ${profile.shop_code}\n" else ""}তারিখ: ${Format.currentWeekday()}
-────────────────────────────
-BakiKhata · নিরাপদ, স্বচ্ছ ও বিশ্বস্ত ডিজিটাল খাতা
-            """.trimIndent()
-            ShareUtil.shareText(requireContext(), text, "খাতা বিবরণী শেয়ার")
+            val isShopkeeper = profile.role == "shopkeeper"
+            val shopName = if (isShopkeeper) (profile.shop_name ?: profile.full_name ?: "দোকান") else "BakiKhata ডিজিটাল খাতা"
+            val customerName = if (!isShopkeeper) (profile.full_name ?: "গ্রাহক") else "সকল কাস্টমার"
+
+            PdfReceiptGenerator.generateAndShareStatement(
+                context = requireContext(),
+                shopName = shopName,
+                shopCode = profile.shop_code,
+                shopPhone = profile.phone,
+                customerName = customerName,
+                customerPhone = profile.phone,
+                records = emptyList(),
+                currentDue = 0.0
+            )
         }
     }
 

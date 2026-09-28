@@ -113,6 +113,20 @@ class HistoryFragment : Fragment() {
                         }
                     )
                 }
+
+                binding.btnExportPdf.setOnClickListener {
+                    HapticUtil.tap(it)
+                    PdfReceiptGenerator.generateAndShareStatement(
+                        context = requireContext(),
+                        shopName = shopName,
+                        shopCode = shopCode,
+                        shopPhone = shop?.phone,
+                        customerName = userProfile?.full_name ?: "গ্রাহক",
+                        customerPhone = userProfile?.phone,
+                        records = rows,
+                        currentDue = currentDue ?: 0.0
+                    )
+                }
             } catch (e: Exception) {
                 binding.tvEmptyLedger.visibility = View.VISIBLE
                 binding.tvEmptyLedger.text = "ত্রুটি: ${e.message}"
