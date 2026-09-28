@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_glass_card"
+            android:elevation="5dp"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="দোকানে জয়েন"
+                android:textColor="@color/ink"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="দোকানদারের আইডি লিখুন। শুধু সেই দোকান আপনার বাকি দেখতে পাবে।"
+                android:textColor="@color/ink_muted"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etJoinShopCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_field"
+                android:hint="0001"
+                android:padding="14dp"
+                android:textColor="@color/ink"
+                android:textColorHint="@color/ink_light"
+                android:textSize="15sp" />
+
+            <Button
+                android:id="@+id/btnSubmitJoin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_primary_button"
+                android:paddingVertical="13dp"
+                android:text="জয়েন করুন"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvJoinSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textColor="@color/accent_green"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:text="ভাই ভাই স্টোর এ জয়েন হয়েছেন" />
+
+            <TextView
+                android:id="@+id/tvJoinError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/accent_rose"
+                android:textSize="13sp"
+                android:visibility="gone"
+                tools:text="এই আইডির কোনো দোকান পাওয়া যায়নি।" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,57 @@
+# ==========================================
+# Root .gitignore for BakiKhata (Onebaki)
+# ==========================================
+
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE & Editors
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# Android & Gradle
+.gradle/
+build/
+*/build/
+**/build/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+android/*.iml
+android/captures/
+android/.cxx/
+
+# Compiled APKs and Bundles
+*.apk
+*.ap_
+*.aab
+*.dex
+
+# Node.js & Next.js (Web)
+node_modules/
+**/node_modules/
+Onebaki/node_modules/
+Onebaki/.next/
+Onebaki/out/
+Onebaki/build/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment & Local Secrets
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+Onebaki/.env.local

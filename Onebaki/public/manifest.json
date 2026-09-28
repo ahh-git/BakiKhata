@@ -1,0 +1,13 @@
+{
+  "name": "Onebaki",
+  "short_name": "Onebaki",
+  "description": "দোকানের বাকি খাতা",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f8fc",
+  "theme_color": "#f6f8fc",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

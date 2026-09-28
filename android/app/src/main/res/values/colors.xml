@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Background -->
+    <color name="bg_start">#F6F8FC</color>
+    <color name="bg_end">#EEF3FF</color>
+
+    <!-- Text -->
+    <color name="ink">#0F172A</color>
+    <color name="ink_muted">#64748B</color>
+    <color name="ink_light">#94A3B8</color>
+
+    <!-- Primary -->
+    <color name="primary_dark">#111827</color>
+    <color name="primary_indigo">#312E81</color>
+    <color name="primary_violet">#6366F1</color>
+    <color name="primary_violet_soft">#1A6366F1</color>
+
+    <!-- Glass -->
+    <color name="glass_card_bg">#A6FFFFFF</color>
+    <color name="glass_card_border">#B3FFFFFF</color>
+    <color name="glass_inner_bg">#66FFFFFF</color>
+    <color name="glass_btn_bg">#B8FFFFFF</color>
+    <color name="glass_btn_border">#E6FFFFFF</color>
+
+    <!-- Nav -->
+    <color name="glass_nav_bg">#CCFFFFFF</color>
+    <color name="glass_nav_active">#F8FAFC</color>
+
+    <!-- Accents -->
+    <color name="accent_green">#047857</color>
+    <color name="accent_green_soft">#1A047857</color>
+    <color name="accent_amber">#B45309</color>
+    <color name="accent_amber_soft">#1AB45309</color>
+    <color name="accent_rose">#E11D48</color>
+    <color name="accent_rose_soft">#1AE11D48</color>
+    <color name="accent_blue">#2563EB</color>
+    <color name="accent_blue_soft">#1A2563EB</color>
+
+    <!-- Orbs -->
+    <color name="orb_indigo">#55A5B4FC</color>
+    <color name="orb_sky">#557DD3FC</color>
+    <color name="orb_purple">#55DDD6FE</color>
+
+    <!-- Splash -->
+    <color name="splash_start">#111827</color>
+    <color name="splash_end">#312E81</color>
+
+    <!-- Base -->
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="divider">#14000000</color>
+    <color name="shimmer_base">#0A000000</color>
+    <color name="shimmer_highlight">#05000000</color>
+</resources>
