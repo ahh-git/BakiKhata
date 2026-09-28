@@ -19,18 +19,21 @@ create table if not exists public.app_version (
 alter table public.app_version enable row level security;
 
 -- Allow public read access so anyone (authenticated or guest) can check for app updates
+drop policy if exists "Allow public read access to app_version" on public.app_version;
 create policy "Allow public read access to app_version"
   on public.app_version
   for select
   using (true);
 
--- Insert initial version record for v1.2.0 (Build 3)
+-- Insert or update initial version record for v1.2.0 (Build 3)
+delete from public.app_version where version_code = 3;
+
 insert into public.app_version (version_code, version_name, min_supported_version, download_url, release_notes, is_critical)
 values (
   3,
   '1.2.0',
   1,
-  'https://github.com/YOUR_USERNAME/BakiKhata/releases',
-  '• প্রিমিয়াম ফ্লোটিং বটম নেভিগেশন বার\n• বাকি পরিশোধের অনুরোধকারীর নাম ও মোবাইল নম্বর প্রদর্শন\n• নতুন ব্র্যান্ড লোগো ও প্যাকেজ নেম com.bakikhata.app\n• ইন-অ্যাপ ভার্সন কন্ট্রোল ও অটো-আপডেট চেকার',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.2.0/BakiKhata-v1.2.apk',
+  '• প্রিমিয়াম ফ্লোটিং বটম নেভিগেশন বার\n• বাকি পরিশোধের অনুরোধকারীর নাম ও মোবাইল নম্বর প্রদর্শন\n• ক্যামেরা কিউআর কোড স্ক্যানার\n• নতুন ব্র্যান্ড লোগো ও প্যাকেজ নেম com.bakikhata.app\n• ইন-অ্যাপ ভার্সন কন্ট্রোল ও অটো-আপডেট চেকার',
   false
 );
