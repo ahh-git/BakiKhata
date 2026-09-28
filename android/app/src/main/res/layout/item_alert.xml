@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:background="@drawable/bg_glass_card"
-    android:elevation="3dp"
     android:orientation="vertical"
     android:padding="16dp">
 

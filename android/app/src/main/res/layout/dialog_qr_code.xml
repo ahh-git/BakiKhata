@@ -37,7 +37,6 @@
         android:layout_height="230dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_live_amount_box"
-        android:elevation="3dp"
         android:gravity="center"
         android:padding="16dp">
 

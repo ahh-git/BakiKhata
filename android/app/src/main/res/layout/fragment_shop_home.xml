@@ -72,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_gradient_card"
-                android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -161,7 +160,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_glass_card"
-                android:elevation="4dp"
                 android:orientation="vertical"
                 android:padding="18dp">
 
@@ -315,7 +313,6 @@
                     android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_glass_card"
                     android:clickable="true"
-                    android:elevation="3dp"
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -351,7 +348,6 @@
                     android:layout_marginStart="6dp"
                     android:background="@drawable/bg_glass_card"
                     android:clickable="true"
-                    android:elevation="3dp"
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="16dp">
@@ -418,7 +414,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_glass_card"
-                android:elevation="2dp"
                 android:gravity="center"
                 android:padding="20dp"
                 android:text="কোনো নতুন পেমেন্ট অনুমোদনের অনুরোধ নেই。"

@@ -47,7 +47,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_glass_nav"
-        android:elevation="6dp"
+        android:elevation="0dp"
         android:visibility="gone"
         app:itemActiveIndicatorStyle="@style/BottomNavActiveIndicator"
         app:itemIconSize="22dp"

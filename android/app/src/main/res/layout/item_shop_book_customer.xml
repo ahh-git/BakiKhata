@@ -6,7 +6,6 @@
     android:layout_marginBottom="12dp"
     android:background="@drawable/bg_glass_card"
     android:clickable="true"
-    android:elevation="3dp"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical"
