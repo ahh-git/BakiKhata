@@ -38,7 +38,7 @@ begin
   values (
     new.id,
     coalesce(new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'name', split_part(new.email, '@', 1)),
-    new.raw_user_meta_data ->> 'avatar_url'
+    coalesce(new.raw_user_meta_data ->> 'avatar_url', new.raw_user_meta_data ->> 'picture')
   )
   on conflict (id) do nothing;
   return new;
@@ -287,3 +287,25 @@ begin
   exception when duplicate_object then null;
   end;
 end $$;
+
+-- ==============================================================
+-- In-App Version Control System
+-- ==============================================================
+create table if not exists public.app_version (
+  id serial primary key,
+  version_code int not null,
+  version_name text not null,
+  min_supported_version int not null default 1,
+  download_url text not null,
+  release_notes text,
+  is_critical boolean default false,
+  created_at timestamptz default now()
+);
+
+alter table public.app_version enable row level security;
+
+drop policy if exists "Allow public read access to app_version" on public.app_version;
+create policy "Allow public read access to app_version"
+  on public.app_version
+  for select
+  using (true);
