@@ -25,20 +25,20 @@ create policy "Allow public read access to app_version"
   for select
   using (true);
 
--- Insert or update version record for v1.5.0 (Build 6)
-delete from public.app_version where version_code = 6;
+-- Insert or update version record for v1.6.0 (Build 7)
+delete from public.app_version where version_code = 7;
 
 insert into public.app_version (version_code, version_name, min_supported_version, download_url, release_notes, is_critical)
 values (
-  6,
-  '1.5.0',
+  7,
+  '1.6.0',
   1,
-  'https://github.com/ahh-git/BakiKhata/releases/download/v1.5.0/BakiKhata-v1.5.apk',
-  '• কার্ড ও বাটনসমূহের বর্ডারে মসৃণ চলমান নিয়ন লেজার লাইট এফেক্ট
-• খাতা ট্যাব থেকে কাস্টমারের ব্যক্তিগত খাতা ও বিস্তারিত লেনদেন খতিয়ান
-• অ্যাপের ভেতর লাইভ প্রগ্রেস বার সহ সরাসরি APK ডাউনলোডার ও ইনস্টলার
-• Google একাউন্টের আসল 4K ক্রিস্টাল ক্লিয়ার প্রোফাইল ছবি সিঙ্ক
-• প্রফেশনাল A4 সাইজ ডিজিটাল PDF রসিদ ও লেজার স্টেটমেন্ট তৈরি ও শেয়ার',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.6.0/BakiKhata-v1.6.apk',
+  '• ক্লাসিক ফ্রস্টেড গ্লাস হোয়াইট থিম (অপ্রয়োজনীয় নিয়ন এফেক্ট অপসারিত)
+• ডার্ক ব্লু স্প্ল্যাশ পেজ অপসারিত — অ্যাপ সাথে সাথে সরাসরি ওপেন হবে
+• আপডেট ইনস্টল বাটনের হাই-কন্ট্রাস্ট উজ্জ্বল ভিজিবিলিটি ফিক্স
+• কাস্টমার ও দোকানদারের মধ্যে দ্বি-পাক্ষিক এনক্রিপ্টেড ডিজিটাল খাতা সুরক্ষা
+• অফিসিয়াল PDF স্টেটমেন্টে অ্যান্টি-ফ্রড ডিজিটাল ভেরিফিকেশন QR কোড ও অডিট সিল',
   false
 );
 

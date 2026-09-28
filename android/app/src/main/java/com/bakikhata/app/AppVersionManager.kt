@@ -101,7 +101,8 @@ object AppVersionManager {
         // If already downloaded and valid size (> 2MB), allow direct install
         if (targetApk.exists() && targetApk.length() > 2_000_000) {
             binding.btnDownloadUpdate.text = "এখনই ইন্সটল করুন"
-            binding.btnDownloadUpdate.setBackgroundResource(R.drawable.bg_badge_emerald)
+            binding.btnDownloadUpdate.setBackgroundResource(R.drawable.bg_install_action_button)
+            binding.btnDownloadUpdate.setTextColor(android.graphics.Color.WHITE)
             binding.btnDownloadUpdate.setOnClickListener {
                 HapticUtil.tap(it)
                 installApk(activity, targetApk)
@@ -188,7 +189,8 @@ object AppVersionManager {
                         binding.tvDownloadStatus.text = "ডাউনলোড সম্পন্ন! ইন্সটল করতে ট্যাপ করুন"
                         binding.btnDownloadUpdate.isEnabled = true
                         binding.btnDownloadUpdate.text = "এখনই ইন্সটল করুন"
-                        binding.btnDownloadUpdate.setBackgroundResource(R.drawable.bg_badge_emerald)
+                        binding.btnDownloadUpdate.setBackgroundResource(R.drawable.bg_install_action_button)
+                        binding.btnDownloadUpdate.setTextColor(android.graphics.Color.WHITE)
 
                         // Trigger installation immediately
                         installApk(activity, targetApk)

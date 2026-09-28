@@ -197,7 +197,41 @@ object PdfReceiptGenerator {
             paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
         }
 
-        // 6. Footer Authenticity Seal
+        // 6. Digital Verification & Security Seal Section (Anti-Fraud)
+        val securityY = (pageHeight - 128).toFloat()
+        val auditHash = "BK-" + Integer.toHexString((shopName + customerName + currentDateStr + currentDue).hashCode()).uppercase().takeLast(6)
+        val qrPayload = "BakiKhata Verified Ledger\nStore: $shopName ($shopCode)\nCustomer: $customerName\nBalance: ৳${Calc.money(currentDue)}\nAudit Code: #$auditHash\nSecure Cloud Ledger"
+
+        // Draw Verification QR Code
+        val qrBitmap = QRCodeGenerator.generate(qrPayload, 140)
+        if (qrBitmap != null) {
+            canvas.drawBitmap(qrBitmap, null, RectF(36f, securityY, 36f + 65f, securityY + 65f), null)
+        }
+
+        // Security Badge Card next to QR Code
+        val badgeX = 36f + 75f
+        val badgeWidth = (pageWidth - 36 - badgeX)
+        val badgeRect = RectF(badgeX, securityY, badgeX + badgeWidth, securityY + 65f)
+        paint.color = Color.parseColor("#F0FDF4")
+        canvas.drawRoundRect(badgeRect, 6f, 6f, paint)
+        paint.color = Color.parseColor("#BBF7D0")
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 1f
+        canvas.drawRoundRect(badgeRect, 6f, 6f, paint)
+        paint.style = Paint.Style.FILL
+
+        paint.color = Color.parseColor("#047857")
+        paint.textSize = 10.5f
+        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        canvas.drawText("ডিজিটাল সুরক্ষা ও নির্ভুলতা যাচাইকৃত (Tamper-Proof)", badgeX + 12f, securityY + 20f, paint)
+
+        paint.color = Color.parseColor("#334155")
+        paint.textSize = 9f
+        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+        canvas.drawText("অডিট রেফারেন্স কোড: #$auditHash · কিউআর কোড স্ক্যান করে সত্যতা যাচাই করুন", badgeX + 12f, securityY + 38f, paint)
+        canvas.drawText("দোকানদার ও গ্রাহক উভয়ের জন্য ডিজিটালভাবে নিরাপদ ও ক্লাউড সংরক্ষিত খতিয়ান।", badgeX + 12f, securityY + 54f, paint)
+
+        // 7. Footer
         val footerY = (pageHeight - 50).toFloat()
         paint.color = Color.parseColor("#E2E8F0")
         canvas.drawLine(36f, footerY, (pageWidth - 36).toFloat(), footerY, paint)

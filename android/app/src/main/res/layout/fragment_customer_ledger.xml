@@ -19,20 +19,13 @@
             android:paddingTop="16dp"
             android:paddingBottom="32dp">
 
-            <!-- Customer Profile Glass Card with Running Neon Glow -->
-            <com.bakikhata.app.NeonBorderLayout
+            <!-- Customer Profile Glass Card -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:neonCornerRadius="16dp"
-                app:neonGlowWidth="4.5dp"
-                app:neonStrokeWidth="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_glass_card"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -172,24 +165,16 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                </LinearLayout>
-            </com.bakikhata.app.NeonBorderLayout>
+            </LinearLayout>
 
-            <!-- Due Balance Summary Glass Card with Running Neon Glow -->
-            <com.bakikhata.app.NeonBorderLayout
+            <!-- Due Balance Summary Glass Card -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                app:neonCornerRadius="16dp"
-                app:neonGlowWidth="4.5dp"
-                app:neonStrokeWidth="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_glass_card"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="18dp">
 
                 <!-- Header: Title and Status Badge -->
                 <LinearLayout
@@ -299,45 +284,88 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                </LinearLayout>
-            </com.bakikhata.app.NeonBorderLayout>
+            </LinearLayout>
 
-            <!-- PDF Statement Export Button with Running Neon Glow -->
-            <com.bakikhata.app.NeonBorderLayout
-                android:id="@+id/btnExportPdf"
+            <!-- Mutual Security & Verification Badge -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
-                app:neonCornerRadius="12dp"
-                app:neonGlowWidth="4.5dp"
-                app:neonStrokeWidth="2dp">
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_glass_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="10dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_lock" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_glass_button"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingVertical="13dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@drawable/ic_book" />
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="অফিসিয়াল PDF স্টেটমেন্ট ডাউনলোড / শেয়ার"
-                        android:textColor="@color/primary_indigo"
-                        android:textSize="13sp"
+                        android:text="উভয়পক্ষের সুরক্ষিত হিসাব"
+                        android:textColor="@color/ink"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:text="দোকানদার ও গ্রাহকের প্রতিটি লেনদেন ক্লাউডে এনক্রিপ্ট ও অপরিবর্তনীয়।"
+                        android:textColor="@color/ink_muted"
+                        android:textSize="10.5sp" />
                 </LinearLayout>
-            </com.bakikhata.app.NeonBorderLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_badge_emerald"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="3dp"
+                    android:text="সুরক্ষিত"
+                    android:textColor="@color/accent_green"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- PDF Statement Export Button -->
+            <LinearLayout
+                android:id="@+id/btnExportPdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_glass_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="13dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_book" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="অফিসিয়াল PDF স্টেটমেন্ট ডাউনলোড / শেয়ার"
+                    android:textColor="@color/primary_indigo"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <!-- Section Title: Transaction Ledger -->
             <LinearLayout

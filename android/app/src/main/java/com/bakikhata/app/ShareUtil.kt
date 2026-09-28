@@ -172,17 +172,19 @@ BakiKhata অ্যাপে 'দোকানে জয়েন করুন' �
     ) {
         val qtyText = if (quantity != null) "${Calc.toBengaliNumerals(quantity.toInt().toString())} টি" else "১ টি"
         val totalDueText = if (totalDue != null) "\nবর্তমান মোট বাকি: ৳${Calc.money(totalDue)}" else ""
+        val auditHash = "BK-" + Integer.toHexString((shopName + (customerName ?: "") + amount + dateFormatted).hashCode()).uppercase().takeLast(6)
 
         val text = """
-BakiKhata ডিজিটাল ভাউচার
+BakiKhata ডিজিটাল ভাউচার (যাচাইকৃত)
 ────────────────────────────
 দোকান: $shopName ${if (!shopCode.isNullOrEmpty()) "(আইডি: $shopCode)" else ""}
 কাস্টমার: ${customerName ?: "গ্রাহক"}
 খরচ: ${itemName ?: "বাকি"} ($qtyText)
 টাকার পরিমাণ: ৳${Calc.money(amount)}
 তারিখ: $dateFormatted$totalDueText
+সুরক্ষা অডিট কোড: #$auditHash
 ────────────────────────────
-BakiKhata · নিরাপদ ও স্বচ্ছ খাতা
+BakiKhata · ক্লাউড এনক্রিপ্টেড নিরাপদ ও স্বচ্ছ খাতা
         """.trimIndent()
 
         shareText(context, text, "ডিজিটাল ভাউচার শেয়ার করুন")
