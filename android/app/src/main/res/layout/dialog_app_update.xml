@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp">
 
-    <LinearLayout
+    <com.bakikhata.app.NeonBorderLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_glass_card"
-        android:orientation="vertical"
-        android:padding="24dp">
+        app:neonCornerRadius="18dp"
+        app:neonGlowWidth="5dp"
+        app:neonStrokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_glass_card"
+            android:orientation="vertical"
+            android:padding="24dp">
 
         <!-- Top Icon & Badge -->
         <LinearLayout
@@ -148,22 +156,30 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <!-- Download / Update Button -->
-        <TextView
-            android:id="@+id/btnDownloadUpdate"
+        <!-- Download / Update Button with Running Neon Glow -->
+        <com.bakikhata.app.NeonBorderLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_primary_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:paddingVertical="14dp"
-            android:text="এখনই ইন-অ্যাপ আপডেট করুন"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            app:neonCornerRadius="12dp"
+            app:neonGlowWidth="4.5dp"
+            app:neonStrokeWidth="2dp">
+
+            <TextView
+                android:id="@+id/btnDownloadUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_primary_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingVertical="14dp"
+                android:text="এখনই ইন-অ্যাপ আপডেট করুন"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </com.bakikhata.app.NeonBorderLayout>
 
         <!-- Later / Skip Button -->
         <TextView
@@ -180,6 +196,7 @@
             android:textColor="@color/ink_light"
             android:textSize="13sp"
             android:textStyle="bold" />
-    </LinearLayout>
+        </LinearLayout>
+    </com.bakikhata.app.NeonBorderLayout>
 
 </LinearLayout>

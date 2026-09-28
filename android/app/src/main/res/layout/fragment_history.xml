@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -38,74 +39,90 @@
             android:textSize="12sp"
             tools:text="আইডি 0001 · নম্বর 01700000000" />
 
-        <!-- Total Due Card (Visible for customers) -->
-        <LinearLayout
+        <!-- Total Due Card with Running Neon Glow (Visible for customers) -->
+        <com.bakikhata.app.NeonBorderLayout
             android:id="@+id/layoutTotalDueCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_glass_card"
-            android:orientation="vertical"
-            android:padding="20dp">
+            app:neonCornerRadius="16dp"
+            app:neonGlowWidth="4.5dp"
+            app:neonStrokeWidth="2dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="মোট বাকি"
-                android:textColor="@color/ink_muted"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvHistoryTotalDue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/ink"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                tools:text="৳১২০" />
-
-            <Button
-                android:id="@+id/btnHistoryAddMore"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_primary_button"
-                android:paddingVertical="12dp"
-                android:text="আরও বাকি অ্যাড করুন"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:background="@drawable/bg_glass_card"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- PDF Statement Download Button -->
-        <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="মোট বাকি"
+                    android:textColor="@color/ink_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvHistoryTotalDue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/ink"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    tools:text="৳১২০" />
+
+                <Button
+                    android:id="@+id/btnHistoryAddMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_primary_button"
+                    android:paddingVertical="12dp"
+                    android:text="আরও বাকি অ্যাড করুন"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.bakikhata.app.NeonBorderLayout>
+
+        <!-- PDF Statement Download Button with Running Neon Glow -->
+        <com.bakikhata.app.NeonBorderLayout
             android:id="@+id/btnExportPdf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/bg_glass_button"
+            android:layout_marginTop="14dp"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingVertical="12dp">
+            app:neonCornerRadius="12dp"
+            app:neonGlowWidth="4.5dp"
+            app:neonStrokeWidth="2dp">
 
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/ic_book" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="অফিসিয়াল PDF স্টেটমেন্ট ডাউনলোড / শেয়ার"
-                android:textColor="@color/primary_indigo"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:background="@drawable/bg_glass_button"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingVertical="12dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_book" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="অফিসিয়াল PDF স্টেটমেন্ট ডাউনলোড / শেয়ার"
+                    android:textColor="@color/primary_indigo"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.bakikhata.app.NeonBorderLayout>
 
         <!-- Ledger Entries RecyclerView -->
         <TextView
