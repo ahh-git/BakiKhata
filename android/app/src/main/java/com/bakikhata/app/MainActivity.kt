@@ -42,6 +42,13 @@ class MainActivity : AppCompatActivity() {
         } else {
             routeUser()
         }
+
+        // In-App Version Control check
+        AppVersionManager.checkForUpdates(
+            activity = this,
+            scope = lifecycleScope,
+            isManualCheck = false
+        )
     }
 
     override fun onNewIntent(intent: Intent) {

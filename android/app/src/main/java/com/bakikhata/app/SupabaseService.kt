@@ -1,4 +1,4 @@
-﻿package com.bakikhata.app
+package com.bakikhata.app
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -391,7 +391,7 @@ object SupabaseService {
 
     suspend fun joinShopByCode(code: String, customerId: String, token: String): Result<Unit> {
         val shop = findShopByCode(code, token)
-            ?: return Result.failure(Exception("à¦¦à§‹à¦•à¦¾à¦¨ à¦ªà¦¾à¦“à¦¯à¦¼à¦¾ à¦¯à¦¾à¦¯à¦¼à¦¨à¦¿à¥¤ à¦†à¦‡à¦¡à¦¿ à¦šà§‡à¦• à¦•à¦°à§à¦¨à¥¤"))
+            ?: return Result.failure(Exception("দোকান পাওয়া যায়নি। আইডি চেক করুন।"))
         return joinShop(shop.id, customerId, token)
     }
 
@@ -408,7 +408,7 @@ object SupabaseService {
                     Alert(
                         id = o.getString("id"),
                         user_id = o.getString("user_id"),
-                        title = o.optString("title", "à¦¨à§‹à¦Ÿà¦¿à¦«à¦¿à¦•à§‡à¦¶à¦¨"),
+                        title = o.optString("title", "নোটিফিকেশন"),
                         body = o.optString("body", ""),
                         created_at = o.optString("created_at", "")
                     )
@@ -417,6 +417,26 @@ object SupabaseService {
             list
         } catch (e: Exception) {
             emptyList()
+        }
+    }
+
+    suspend fun getLatestAppVersion(): AppVersionInfo? {
+        val (code, resp) = request("GET", "/rest/v1/app_version?select=*&order=version_code.desc&limit=1")
+        if (code !in 200..299) return null
+        return try {
+            val arr = JSONArray(resp)
+            if (arr.length() == 0) return null
+            val o = arr.getJSONObject(0)
+            AppVersionInfo(
+                versionCode = o.getInt("version_code"),
+                versionName = o.getString("version_name"),
+                minSupportedVersion = o.optInt("min_supported_version", 1),
+                downloadUrl = o.getString("download_url"),
+                releaseNotes = o.optString("release_notes").takeIf { it.isNotEmpty() && it != "null" },
+                isCritical = o.optBoolean("is_critical", false)
+            )
+        } catch (e: Exception) {
+            null
         }
     }
 }

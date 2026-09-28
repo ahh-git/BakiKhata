@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.bakikhata.app.databinding.FragmentProfileBinding
 
@@ -59,6 +60,17 @@ class ProfileFragment : Fragment() {
                     showQrDialog(profile)
                 }
             }
+        }
+
+        // App Version & Update Check
+        binding.tvAppVersion.text = "বাকিখাতা v${BuildConfig.VERSION_NAME} (বিল্ড ${BuildConfig.VERSION_CODE}) · সুরক্ষিত ক্লাউড খাতা"
+        binding.btnCheckAppUpdate.setOnClickListener {
+            HapticUtil.tap(it)
+            AppVersionManager.checkForUpdates(
+                activity = requireActivity(),
+                scope = viewLifecycleOwner.lifecycleScope,
+                isManualCheck = true
+            )
         }
 
         // Support via WhatsApp

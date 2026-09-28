@@ -1,4 +1,4 @@
-﻿package com.bakikhata.app
+package com.bakikhata.app
 
 data class Profile(
     val id: String,
@@ -61,4 +61,13 @@ data class Alert(
     val title: String,
     val body: String,
     val created_at: String
+)
+
+data class AppVersionInfo(
+    val versionCode: Int,
+    val versionName: String,
+    val minSupportedVersion: Int = 1,
+    val downloadUrl: String,
+    val releaseNotes: String? = null,
+    val isCritical: Boolean = false
 )
