@@ -60,8 +60,8 @@ create table if not exists public.shop_links (
 
 create table if not exists public.ledger (
   id uuid primary key default gen_random_uuid(),
-  shopkeeper_id uuid not null references public.profiles (id),
-  customer_id uuid not null references public.profiles (id),
+  shopkeeper_id uuid not null references public.profiles (id) on delete cascade,
+  customer_id uuid not null references public.profiles (id) on delete cascade,
   kind text not null check (kind in ('credit', 'payment')),
   item_name text,
   quantity numeric,
@@ -79,7 +79,7 @@ create table if not exists public.notifications (
   title text not null,
   body text,
   kind text,
-  related_ledger_id uuid references public.ledger (id),
+  related_ledger_id uuid references public.ledger (id) on delete cascade,
   read_at timestamptz,
   created_at timestamptz not null default now()
 );
