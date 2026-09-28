@@ -1,5 +1,6 @@
 package com.bakikhata.app
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,27 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bakikhata.app.databinding.FragmentJoinBinding
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.launch
 
 class JoinFragment : Fragment() {
     private var _binding: FragmentJoinBinding? = null
     private val binding get() = _binding!!
+
+    private val qrScannerLauncher = registerForActivityResult(ScanContract()) { result ->
+        if (result.contents != null) {
+            val raw = result.contents.trim()
+            val code = extractShopCode(raw)
+            if (code.isNotEmpty()) {
+                binding.etJoinShopCode.setText(code)
+                joinShop(code)
+            } else {
+                binding.tvJoinError.text = "সঠিক দোকান কোড পাওয়া যায়নি: $raw"
+                binding.tvJoinError.visibility = View.VISIBLE
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentJoinBinding.inflate(inflater, container, false)
@@ -21,6 +38,11 @@ class JoinFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnScanQrCode.setOnClickListener {
+            HapticUtil.tap(it)
+            startQrScan()
+        }
 
         binding.btnSubmitJoin.setOnClickListener {
             HapticUtil.tap(it)
@@ -34,6 +56,30 @@ class JoinFragment : Fragment() {
         }
     }
 
+    private fun startQrScan() {
+        val options = ScanOptions().apply {
+            setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+            setPrompt("দোকানদারের QR কোড ক্যামেরার সামনে ধরুন")
+            setCameraId(0)
+            setBeepEnabled(true)
+            setBarcodeImageEnabled(false)
+            setOrientationLocked(false)
+        }
+        qrScannerLauncher.launch(options)
+    }
+
+    private fun extractShopCode(raw: String): String {
+        return if (raw.contains("shop_code=")) {
+            try {
+                Uri.parse(raw).getQueryParameter("shop_code") ?: raw.substringAfter("shop_code=").take(4)
+            } catch (e: Exception) {
+                raw.substringAfter("shop_code=").take(4)
+            }
+        } else {
+            raw.trim()
+        }
+    }
+
     private fun joinShop(code: String) {
         val activity = requireActivity() as? MainActivity ?: return
         val token = activity.sessionManager.getAccessToken() ?: return
@@ -41,6 +87,7 @@ class JoinFragment : Fragment() {
 
         binding.btnSubmitJoin.isEnabled = false
         binding.tvJoinError.visibility = View.GONE
+        binding.tvJoinSuccess.visibility = View.GONE
 
         viewLifecycleOwner.lifecycleScope.launch {
             val result = SupabaseService.joinShopByCode(code, userId, token)
@@ -48,7 +95,7 @@ class JoinFragment : Fragment() {
                 try {
                     _binding?.root?.let { v -> HapticUtil.success(v) }
                 } catch (_: Exception) {}
-                Toast.makeText(requireContext(), "সফলভাবে যোগ দিয়েছেন!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "দোকানে সফলভাবে যোগ দিয়েছেন!", Toast.LENGTH_SHORT).show()
                 activity.onJoinComplete()
             }.onFailure { e ->
                 binding.tvJoinError.text = "ব্যর্থ: ${e.message}"

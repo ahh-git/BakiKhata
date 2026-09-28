@@ -26,11 +26,23 @@ class MainActivity : AppCompatActivity() {
 
         sessionManager = SessionManager(this)
 
+        // Automatic backstack listener to show/hide bottom nav and back toolbar
+        supportFragmentManager.addOnBackStackChangedListener {
+            val isTopLevel = supportFragmentManager.backStackEntryCount == 0
+            val sessionProfile = sessionManager.getProfile()
+            if (sessionProfile != null && isTopLevel) {
+                binding.bottomNav.visibility = View.VISIBLE
+                binding.toolbarBack.visibility = View.GONE
+            } else if (!isTopLevel) {
+                binding.bottomNav.visibility = View.GONE
+                binding.toolbarBack.visibility = View.VISIBLE
+            }
+        }
+
         // Back button handler
         binding.btnBack.setOnClickListener {
             HapticUtil.tap(it)
             onBackPressedDispatcher.onBackPressed()
-            binding.toolbarBack.visibility = View.GONE
         }
 
         // Check if launching from OAuth deep link
@@ -236,26 +248,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun navigateToJoin() {
+        binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
         showFragment(JoinFragment(), addToBackStack = true)
     }
 
     fun navigateToAddBaki(shopId: String) {
+        binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
         showFragment(AddBakiFragment.newInstance(shopId), addToBackStack = true)
     }
 
     fun navigateToPay(shopId: String) {
+        binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
         showFragment(PayFragment.newInstance(shopId), addToBackStack = true)
     }
 
     fun navigateToHistory(shopId: String) {
+        binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
         showFragment(HistoryFragment.newInstance(shopId, isShopkeeper = false), addToBackStack = true)
     }
 
     fun navigateToShopCustomerHistory(shopId: String, customerId: String) {
+        binding.bottomNav.visibility = View.GONE
         binding.toolbarBack.visibility = View.VISIBLE
         showFragment(HistoryFragment.newInstance(shopId, isShopkeeper = true), addToBackStack = true)
     }

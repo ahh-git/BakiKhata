@@ -68,26 +68,28 @@
             android:id="@+id/layoutDueBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_badge_rose"
+            android:background="@drawable/bg_badge_due_pill"
+            android:gravity="center"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp"
-            android:gravity="end">
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="7dp">
 
             <TextView
                 android:id="@+id/tvDueLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="মোট বাকি"
-                android:textColor="@color/accent_rose"
-                android:textSize="10sp" />
+                android:textColor="#E11D48"
+                android:textSize="10sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCustomerDue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/accent_rose"
-                android:textSize="16sp"
+                android:layout_marginTop="1dp"
+                android:textColor="#BE123C"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="৳৫০০" />
         </LinearLayout>
@@ -116,19 +118,19 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp">
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="7dp">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@drawable/ic_whatsapp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="তাকিদা পাঠান"
+                android:layout_marginStart="5dp"
+                android:text="তাকিদা"
                 android:textColor="@color/ink"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -145,18 +147,18 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="8dp">
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="7dp">
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@drawable/ic_call" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
+                android:layout_marginStart="5dp"
                 android:text="কল"
                 android:textColor="@color/accent_blue"
                 android:textSize="12sp"
@@ -169,13 +171,29 @@
             android:layout_weight="1" />
 
         <!-- View Ledger Hint -->
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="হিসাব দেখুন ›"
-            android:textColor="@color/ink_light"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="হিসাব দেখুন"
+                android:textColor="@color/primary_indigo"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="›"
+                android:textColor="@color/primary_indigo"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
