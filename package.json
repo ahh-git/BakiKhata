@@ -1,0 +1,10 @@
+{
+  "name": "bakikhata-web",
+  "version": "1.6.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix Onebaki run dev",
+    "build": "npm --prefix Onebaki run build",
+    "start": "npm --prefix Onebaki run start"
+  }
+}
