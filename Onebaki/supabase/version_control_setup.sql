@@ -33,7 +33,7 @@ values (
   4,
   '1.3.0',
   1,
-  'https://github.com/ahh-git/BakiKhata/releases/download/v1.3.0/BakiKhata-v1.3.apk',
+  'https://github.com/ahh-git/BakiKhata/releases/download/v1.2.0/BakiKhata-v1.3.apk',
   '• প্রোফাইল ছবি আপডেট ও গ্যালারি থেকে ছবি আপলোড
 • Google / Gmail একাউন্টের ছবি অটো-ডিটেকশন
 • নির্ভুল WhatsApp ডিরেক্ট মেসেজিং (বাংলাদেশ কান্ট্রি কোড সহ ফিক্স)
